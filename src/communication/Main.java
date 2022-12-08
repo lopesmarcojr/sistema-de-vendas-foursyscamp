@@ -2,11 +2,12 @@ package communication;
 
 import data.StockData;
 import entities.Costumer;
+import entities.Product;
 import services.SaleService;
 import services.StockService;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -41,41 +42,62 @@ public class Main {
             System.out.print("Resposta: ");
             resposta = sc.nextInt();
             if(resposta == 2){
-                System.out.println(stockService.getStock());
+                System.out.print(stockService.getStock());
             }
         }
 
         System.out.println("1 - Realizar uma venda\n2 - Listar produtos\n");
         System.out.print("Digite a opção: ");
         resposta = sc.nextInt();
+        System.out.print("Digite o nome do cliente: ");
+        String name = sc.next();
+        sc.nextLine();
+        System.out.print("Digite o CPF do cliente: ");
+        int cpf = sc.nextInt();
+        sc.nextLine();
+        Costumer costumer = new Costumer(name,cpf);
+        Map<Product, Integer> productCart = new HashMap<>();
+        Map<Integer, Map> costumerSale = new HashMap<>();
+
+        Product productFound = null;
+        int quantity = 0;
         while(resposta == 1){
-            System.out.print("Digite o nome do cliente: ");
-            String name = sc.next();
-            sc.nextLine();
-            System.out.print("Digite o CPF do cliente: ");
-            int cpf = sc.nextInt();
-            sc.nextLine();
-            Costumer costumer = new Costumer(name,cpf);
-            System.out.println("Insira o sku do produto a ser vendido: ");
+            System.out.print("Insira o sku do produto a ser vendido: ");
             String sku = sc.next();
+            boolean encontrado = false;
             for(int i = 0; i < stock.size(); i++){
-                if(stockService.getItem(sku)){
+                if(stockService.getItem(sku) != null){
+                    productFound = (Product) stockService.getItem(sku);
                     System.out.print("Insira a quantidade do produto: ");
-                    int quantity = sc.nextInt();
-                }
-                else{
-                    System.out.println("Produto não encontrado");
+                    quantity = sc.nextInt();
+                    productCart.put(productFound, quantity);
+                    encontrado = true;
                 }
             }
-            System.out.println("1 - Inserir outro produto\n2 - Listar produtos\n3- Finalizar venda\n" +
+            if(!encontrado){
+                System.out.println("Produto não encontrado");
+            }
+            System.out.print("1 - Inserir outro produto na venda\n2 - Listar produtos\n3 - Finalizar venda\n" +
                     "Digite a opção: ");
+            resposta = sc.nextInt();
             if(resposta == 2){
                 stockService.getStock();
             }
             if(resposta == 3){
-                stockService
+                costumerSale.put(costumer.getCpf(),productCart);
+                LocalDateTime saleDate = LocalDateTime.now();
+                saleService.registerNewSale(costumerSale, saleDate, quantity, productFound);
+                System.out.println("Venda finalizada com sucesso\ncd");
             }
 
+        }
+        System.out.print("1 - Listar vendas\n2 - Realizar outra venda\n3 - Sair\nDigite a opção: ");
+        resposta = sc.nextInt();
+        if(resposta == 1){
+            System.out.println(saleService.listSales());
+        }
+        else{
+            System.out.println("Obrigado pela compra");
         }
 
     }

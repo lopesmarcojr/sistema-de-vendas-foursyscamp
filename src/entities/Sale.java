@@ -7,22 +7,28 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class Sale {
 
     private double totalValue;
-    private LocalDateTime saleDate;
+    private String saleDate;
     private int cpf;
     private int saleID;
-    private Costumer costumer;
+
+    private Product product;
+    private int quantity;
     List<Product> productSold = new ArrayList<>();
+    Map<Integer, Map<Object, Integer>> map;
 
     public Sale(){
 
     }
-    public Sale(LocalDateTime saleDate,Costumer costumer) {
+        public Sale(String saleDate, Map map, int quantity, Product product) {
         this.saleDate = saleDate;
-        this.costumer = costumer;
+        this.map = map;
+        this.quantity = quantity;
+        this.product = product;
     }
 
     public double getTotalValue() {
@@ -33,11 +39,11 @@ public class Sale {
         this.totalValue = totalValue;
     }
 
-    public LocalDateTime getSaleDate() {
+    public String getSaleDate() {
         return saleDate;
     }
 
-    public void setSaleDate(LocalDateTime saleDate) {
+    public void setSaleDate(String saleDate) {
         this.saleDate = saleDate;
     }
 
@@ -60,4 +66,10 @@ public class Sale {
         productSold.remove(product);
     }
 
+    @Override
+    public String toString() {
+        return "Total Value: $" + totalValue + '\n' +
+                ", Sale date:" + saleDate + + '\n' +
+                ", Costumer identification and bought products: " + map ;
+    }
 }

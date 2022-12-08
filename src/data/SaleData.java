@@ -20,7 +20,7 @@ public class SaleData implements DataInterface {
 
 
     public List<Object> listItems() {
-        return null;
+        return sale;
     }
 
 

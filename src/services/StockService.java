@@ -30,15 +30,15 @@ public class StockService {
         return returnStock;
     }
 
-    public boolean getItem(String sku){
+    public Object getItem(String sku){
         Object product = null;
         for(int i = 0; i < stock.size(); i++){
             Product p = (Product) stock.get(i);
-            if(p.getSku() == sku){
-                product = stock.get(i);
+            if(p.getSku().equals(sku)){
+                product = p;
             }
         }
-        return true;
+        return product;
     }
 
     public String removeProduct(int code){

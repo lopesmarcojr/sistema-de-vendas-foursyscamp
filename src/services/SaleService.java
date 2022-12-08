@@ -6,17 +6,24 @@ import entities.Sale;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
+import java.util.Map;
 
 public class SaleService {
 
     SaleData saleData = new SaleData();
     List<Object> sales = saleData.listItems();
-    public String registerNewSale(Object obj, List<Object> list, LocalDateTime saleDate,int quantity){
+    public String registerNewSale(Map<Integer, Map> map, LocalDateTime saleDate, int quantity, Product product){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        LocalDateTime saleDateFormatted = LocalDateTime.parse(saleDate.format(formatter), formatter);
-        Sale sale = new Sale();
+        String saleDateString = saleDate.format(formatter);
+        Sale sale = new Sale(saleDateString, map, quantity, product);
+
+        double totalValue = quantity * product.getPrice();
+        int newStockQuantity = product.getQuantity() - quantity;
+        product.setQuantity(newStockQuantity);
+        sale.setTotalValue(totalValue);
+        sale.setSaleDate(saleDateString);
         saleData.save(sale);
 
         return "Nova compra realizada com sucesso!";
