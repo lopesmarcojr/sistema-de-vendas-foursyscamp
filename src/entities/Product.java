@@ -114,10 +114,10 @@ public class Product {
     }
     @Override
     public String toString() {
-        return "Product" +
+        return "Produto" +
                 " - SKU: " + sku +
-                ", Quantity: " + quantity +
-                ", Description: " + description +
-                ", Price: " + price + '\n';
+                ", Quantidade : " + quantity +
+                ", Descrição : " + description +
+                ", Preço : " + price + '\n';
     }
 }

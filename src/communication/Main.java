@@ -71,6 +71,7 @@ public class Main {
                     productFound = (Product) stockService.getItem(sku);
                     System.out.print("Insira a quantidade do produto: ");
                     quantity = sc.nextInt();
+                    productFound.setQuantity(quantity);
                     for(i = 0; i < quantity; i++) {
                         productCart.add(productFound);
                         encontrado = true;
@@ -89,6 +90,7 @@ public class Main {
             if(resposta == 3){
                 LocalDateTime saleDate = LocalDateTime.now();
                 saleService.registerNewSale(saleDate, productCart, costumer.getCpf());
+                costumer.addListProductsBought(productCart);
                 encontrado = true;
                 System.out.println("Venda finalizada com sucesso\n");
             }
@@ -99,13 +101,10 @@ public class Main {
         if(resposta == 1){
             System.out.println(saleService.listSales());
         }
-        if(resposta == 2){
-
-        }
         if(resposta == 3){
-            System.out.print("Digite o CPF do cliente: ");
+            System.out.print("Digite o cpf do cliente: ");
             cpf = sc.nextInt();
-            //System.out.println(saleService.listSalesByCpf(,cpf));
+            System.out.println(costumer.costumerProducts(cpf));
         }
         if(resposta == 4){
             System.out.println("Vendas encerradas");

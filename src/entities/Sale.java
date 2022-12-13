@@ -11,10 +11,6 @@ public class Sale {
     private double totalValue;
     private String saleDate;
     private int cpf;
-    private int saleID;
-
-    private Product product;
-    private int quantity;
     List<Product> productSold = new ArrayList<>();
 
     public Sale(){
@@ -49,11 +45,6 @@ public class Sale {
     public void setCpf(int cpf) {
         this.cpf = cpf;
     }
-
-    public int getSaleID(){ return saleID; }
-
-    public void setSaleID(int saleID){ this.saleID = saleID; }
-
     public void addProduct(Product product){ productSold.add(product);
     }
 
@@ -63,10 +54,10 @@ public class Sale {
 
     @Override
     public String toString() {
-        return "Total Value: $" + totalValue + '\n' +
-                "Sale date: " + saleDate + '\n' +
-                "Costumer identification: " + cpf  + '\n' +
-                "-------Bought products-------" + '\n' + toStringProducts();
+        return "Total : R$" + totalValue + '\n' +
+                "Data da venda: " + saleDate + '\n' +
+                "CPF do cliente: " + cpf  + '\n' +
+                "--------Produtos comprados--------" + '\n' + toStringProducts();
     }
 
     public String toStringProducts(){
@@ -76,9 +67,9 @@ public class Sale {
         productSold.addAll(setProducts);
         String productsList = "";
         for(Product p : productSold){
-            productsList += "Product name: " + p.getDescription() + '\n' +
-                      "Product price: " + p.getPrice() + '\n' +
-                      "Product quantity: " + p.getQuantity() + '\n';
+            productsList += "Produto : " + p.getDescription() + '\n' +
+                      "Preço : " + p.getPrice() + '\n' +
+                      "Quantidade : " + p.getQuantity() + '\n';
         }
         return productsList;
     }
