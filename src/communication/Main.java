@@ -56,11 +56,12 @@ public class Main {
         int cpf = sc.nextInt();
         sc.nextLine();
         Costumer costumer = new Costumer(name,cpf);
-        Map<Product, Integer> productCart = new HashMap<>();
-        Map<Integer, Map> costumerSale = new HashMap<>();
+        List<Product> productCart = new ArrayList<>();
+        Map<Integer, List> costumerSale = new HashMap<>();
 
         Product productFound = null;
         int quantity = 0;
+
         while(resposta == 1){
             System.out.print("Insira o sku do produto a ser vendido: ");
             String sku = sc.next();
@@ -70,8 +71,10 @@ public class Main {
                     productFound = (Product) stockService.getItem(sku);
                     System.out.print("Insira a quantidade do produto: ");
                     quantity = sc.nextInt();
-                    productCart.put(productFound, quantity);
-                    encontrado = true;
+                    for(i = 0; i < quantity; i++) {
+                        productCart.add(productFound);
+                        encontrado = true;
+                    }
                 }
             }
             if(!encontrado){
@@ -84,20 +87,28 @@ public class Main {
                 stockService.getStock();
             }
             if(resposta == 3){
-                costumerSale.put(costumer.getCpf(),productCart);
                 LocalDateTime saleDate = LocalDateTime.now();
-                saleService.registerNewSale(costumerSale, saleDate, quantity, productFound);
-                System.out.println("Venda finalizada com sucesso\ncd");
+                saleService.registerNewSale(saleDate, productCart, costumer.getCpf());
+                encontrado = true;
+                System.out.println("Venda finalizada com sucesso\n");
             }
 
         }
-        System.out.print("1 - Listar vendas\n2 - Realizar outra venda\n3 - Sair\nDigite a opção: ");
+        System.out.print("1 - Listar vendas\n2 - Realizar outra venda\n3 - Listar vendas por CPF\n4- Sair\nDigite a opção: ");
         resposta = sc.nextInt();
         if(resposta == 1){
             System.out.println(saleService.listSales());
         }
-        else{
-            System.out.println("Obrigado pela compra");
+        if(resposta == 2){
+
+        }
+        if(resposta == 3){
+            System.out.print("Digite o CPF do cliente: ");
+            cpf = sc.nextInt();
+            //System.out.println(saleService.listSalesByCpf(,cpf));
+        }
+        if(resposta == 4){
+            System.out.println("Vendas encerradas");
         }
 
     }

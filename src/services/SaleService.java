@@ -6,7 +6,6 @@ import entities.Sale;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 import java.util.Map;
 
@@ -14,14 +13,14 @@ public class SaleService {
 
     SaleData saleData = new SaleData();
     List<Object> sales = saleData.listItems();
-    public String registerNewSale(Map<Integer, Map> map, LocalDateTime saleDate, int quantity, Product product){
+    public String registerNewSale(LocalDateTime saleDate, List<Product> products, int cpf){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         String saleDateString = saleDate.format(formatter);
-        Sale sale = new Sale(saleDateString, map, quantity, product);
-
-        double totalValue = quantity * product.getPrice();
-        int newStockQuantity = product.getQuantity() - quantity;
-        product.setQuantity(newStockQuantity);
+        double totalValue = 0.0;
+        for(Product p : products){
+            totalValue += p.getPrice();
+        }
+        Sale sale = new Sale(saleDateString, products, cpf);
         sale.setTotalValue(totalValue);
         sale.setSaleDate(saleDateString);
         saleData.save(sale);
@@ -38,14 +37,14 @@ public class SaleService {
         return returnSales;
     }
 
-    public String listSalesByCpf(int cpf){
-        Object sale = null;
-        for(int i = 0; i < sales.size(); i++){
-            Product p = (Product) sales.get(i);
-
-
+    public String listSalesByCpf(Map<Integer, Map> map, int cpf){
+        String product = "Produto: ";
+        for(Map.Entry<Integer,Map> entry : map.entrySet()){
+            if(entry.getKey().equals(cpf)){
+                product += entry.getValue();
+            }
         }
-        return "a";
+        return product;
     }
 
     public String cancelSale(int cpf){

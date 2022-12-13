@@ -4,10 +4,7 @@ import data.StockData;
 import services.StockService;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Sale {
 
@@ -19,16 +16,14 @@ public class Sale {
     private Product product;
     private int quantity;
     List<Product> productSold = new ArrayList<>();
-    Map<Integer, Map<Object, Integer>> map;
 
     public Sale(){
 
     }
-        public Sale(String saleDate, Map map, int quantity, Product product) {
+        public Sale(String saleDate, List<Product> productSold, int cpf) {
         this.saleDate = saleDate;
-        this.map = map;
-        this.quantity = quantity;
-        this.product = product;
+        this.productSold = productSold;
+        this.cpf = cpf;
     }
 
     public double getTotalValue() {
@@ -36,7 +31,7 @@ public class Sale {
     }
 
     public void setTotalValue(double totalValue) {
-        this.totalValue = totalValue;
+        this.totalValue += totalValue;
     }
 
     public String getSaleDate() {
@@ -69,7 +64,22 @@ public class Sale {
     @Override
     public String toString() {
         return "Total Value: $" + totalValue + '\n' +
-                ", Sale date:" + saleDate + + '\n' +
-                ", Costumer identification and bought products: " + map ;
+                "Sale date: " + saleDate + '\n' +
+                "Costumer identification: " + cpf  + '\n' +
+                "-------Bought products-------" + '\n' + toStringProducts();
+    }
+
+    public String toStringProducts(){
+        Set<Product> setProducts = new LinkedHashSet<>();
+        setProducts.addAll(productSold);
+        productSold.clear();
+        productSold.addAll(setProducts);
+        String productsList = "";
+        for(Product p : productSold){
+            productsList += "Product name: " + p.getDescription() + '\n' +
+                      "Product price: " + p.getPrice() + '\n' +
+                      "Product quantity: " + p.getQuantity() + '\n';
+        }
+        return productsList;
     }
 }
