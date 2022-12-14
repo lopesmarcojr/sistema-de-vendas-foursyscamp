@@ -88,8 +88,10 @@ public class Main {
                 stockService.getStock();
             }
             if(resposta == 3){
+                System.out.print("Insira o método de pagamento: ");
+                String pagamento = sc.next();
                 LocalDateTime saleDate = LocalDateTime.now();
-                saleService.registerNewSale(saleDate, productCart, costumer.getCpf());
+                saleService.registerNewSale(saleDate, productCart, costumer.getCpf(), pagamento);
                 costumer.addListProductsBought(productCart);
                 encontrado = true;
                 System.out.println("Venda finalizada com sucesso\n");

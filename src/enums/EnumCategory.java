@@ -5,11 +5,11 @@ import java.util.Map;
 
 public enum EnumCategory {
 
-    SHOES("S"),
-    CLOTHES("R"),
-    PERFUMERY("P"),
-    UNDERWAER("I"),
-    SPORTS("E");
+    SAPATOS("S"),
+    ROUPAS("R"),
+    PERFUMARIA("P"),
+    ROUPASÍNTIMAS("I"),
+    ESPORTES("E");
     static final private Map<String, EnumCategory> map = new HashMap<>();
     static {
         for(EnumCategory category : EnumCategory.values()){

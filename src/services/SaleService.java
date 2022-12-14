@@ -16,14 +16,14 @@ public class SaleService {
     SaleData saleData = new SaleData();
     List<Object> sales = saleData.listItems();
 
-    public String registerNewSale(LocalDateTime saleDate, List<Product> products, int cpf){
+    public String registerNewSale(LocalDateTime saleDate, List<Product> products, int cpf, String pagamento){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         String saleDateString = saleDate.format(formatter);
         double totalValue = 0.0;
         for(Product p : products){
             totalValue += p.getPrice();
         }
-        Sale sale = new Sale(saleDateString, products, cpf);
+        Sale sale = new Sale(saleDateString, products, pagamento, cpf);
         sale.setTotalValue(totalValue);
         sale.setSaleDate(saleDateString);
         saleData.save(sale);
@@ -33,7 +33,7 @@ public class SaleService {
 
     public String listSales(){
         List<Object> sales = saleData.listItems();
-        String returnSales = "--------Vendas--------";
+        String returnSales = "--------Vendas--------" + '\n';
         for(int i = 0; i < sales.size(); i++){
             returnSales += sales.get(i);
         }

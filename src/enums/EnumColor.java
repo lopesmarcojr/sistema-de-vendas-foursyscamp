@@ -5,12 +5,12 @@ import java.util.Map;
 
 public enum EnumColor {
 
-    BLUE("B","Azul bebê"),
-    YELLOW("A", "amarelo claro"),
-    GREEN("G", "verde musgo"),
-    RED("R", "vermelho sangue"),
-    BLACK("BLCK", "preto fosco"),
-    WHITE("WHT", "branco gelo");
+    AZUL("AZ","Azul Bebê"),
+    AMARELO("AM", "Amarelo Claro"),
+    VERDE("VE", "Verde Musgo"),
+    VERMELHO("VR", "Vermelho Sangue"),
+    PRETO("PR", "Preto Fosco"),
+    BRANCO("BR", "Branco Gelo");
 
     private static final Map<String, EnumColor> mapColor = new HashMap<>();
     static {

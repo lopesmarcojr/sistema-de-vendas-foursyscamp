@@ -5,22 +5,28 @@ import java.util.Map;
 
 public enum EnumPayment {
 
-    CREDIT("CREDIT"),
-    DEBIT("DEBIT");
+    CREDITO("CRE"),
+    DEBITO("DEB"),
+    PIX("PIX"),
+    DINHEIRO("DIN");
 
 
     private static final Map<String, EnumPayment> map = new HashMap<>();
     static {
         for(EnumPayment payment : EnumPayment.values()){
-            map.put(payment.paymentMethod, payment);
+            map.put(payment.getPayment(), payment);
         }
     }
-    String paymentMethod;
-    EnumPayment(String paymentMethod){
-        this.paymentMethod = paymentMethod;
+    String payment;
+    EnumPayment(String payment){
+        this.payment = payment;
     }
 
-    private EnumPayment getPaymentMethod(String paymentMethod){
-        return map.get(paymentMethod);
+    public String getPayment() {
+        return payment;
+    }
+
+    public static EnumPayment getEnumPagamento(String payment){
+        return map.get(payment);
     }
 }
