@@ -26,7 +26,7 @@ public enum EnumPayment {
         return payment;
     }
 
-    public static EnumPayment getEnumPagamento(String payment){
+    public static EnumPayment getEnumPayment(String payment){
         return map.get(payment);
     }
 }

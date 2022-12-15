@@ -57,9 +57,13 @@ public class Sale {
         return pagamento;
     }
 
+    public EnumPayment getPayment(){
+        return payment;
+    }
+
     public void parsePagamento() {
-        String pPayment = pagamento.substring(0,2);
-        this.payment = EnumPayment.getEnumPagamento(pPayment);
+        String Payment = pagamento.substring(0,2);
+        this.payment = EnumPayment.getEnumPayment(Payment);
     }
 
     public void addProduct(Product product){ productSold.add(product);
