@@ -2,6 +2,7 @@ package entities;
 
 import data.StockData;
 import enums.EnumPayment;
+import services.SaleService;
 import services.StockService;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ public class Sale {
     private String saleDate;
     private int cpf;
     private String pagamento;
-
+    private SaleService saleService;
     private EnumPayment payment;
     List<Product> productSold = new ArrayList<>();
 
@@ -73,21 +74,6 @@ public class Sale {
         return "Total : R$" + totalValue + '\n' +
                 "Data da venda: " + saleDate + '\n' +
                 "CPF do cliente: " + cpf  + '\n' +
-                "Método de pagamento: " + pagamento + '\n' +
-                "--------Produtos comprados--------" + '\n' + toStringProducts();
-    }
-
-    public String toStringProducts(){
-        Set<Product> setProducts = new LinkedHashSet<>();
-        setProducts.addAll(productSold);
-        productSold.clear();
-        productSold.addAll(setProducts);
-        String productsList = "";
-        for(Product p : productSold){
-            productsList += "Produto : " + p.getDescription() + '\n' +
-                      "Preço : " + p.getPrice() + '\n' +
-                      "Quantidade : " + p.getQuantity() + '\n';
-        }
-        return productsList;
+                "Método de pagamento: " + pagamento + '\n';
     }
 }

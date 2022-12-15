@@ -7,14 +7,13 @@ import entities.Sale;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SaleService {
 
     SaleData saleData = new SaleData();
     List<Object> sales = saleData.listItems();
+    List<Product> productList = new ArrayList<>();
 
     public String registerNewSale(LocalDateTime saleDate, List<Product> products, int cpf, String pagamento){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -31,6 +30,22 @@ public class SaleService {
         return "Nova compra realizada com sucesso!";
     }
 
+    public List<Product> returnProductList(List<Product> products, int quantity){
+        for(Product p : products){
+            Product product = new Product();
+            product.setDescription(p.getDescription());
+            product.setQuantity(quantity);
+            product.setPrice(p.getPrice());
+            product.setSku(p.getSku());
+            product.setType(p.getType());
+            product.setSize(p.getSize());
+            product.setCategory(p.getCategory());
+            product.setColor(p.getColor());
+            product.setDepartment(p.getDepartment());
+            productList.add(product);
+        }
+        return productList;
+    }
     public String listSales(){
         List<Object> sales = saleData.listItems();
         String returnSales = "--------Vendas--------" + '\n';
@@ -40,6 +55,19 @@ public class SaleService {
         return returnSales;
     }
 
-
+    public String toStringProducts(){
+        Set<Product> setProducts = new LinkedHashSet<>();
+        for(Product p : productList){
+            setProducts.add(p);
+        }
+        String productsList = "";
+        System.out.print("--------Produtos comprados--------" + '\n');
+        for(Product p : setProducts){
+            productsList += "Produto : " + p.getDescription() + '\n' +
+                    "Preço : " + p.getPrice() + '\n' +
+                    "Quantidade : " + p.getQuantity() + '\n';
+        }
+        return productsList;
+    }
 
 }

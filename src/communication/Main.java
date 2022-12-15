@@ -57,7 +57,6 @@ public class Main {
         sc.nextLine();
         Costumer costumer = new Costumer(name,cpf);
         List<Product> productCart = new ArrayList<>();
-        Map<Integer, List> costumerSale = new HashMap<>();
 
         Product productFound = null;
         int quantity = 0;
@@ -91,17 +90,18 @@ public class Main {
                 System.out.print("Insira o método de pagamento: ");
                 String pagamento = sc.next();
                 LocalDateTime saleDate = LocalDateTime.now();
-                saleService.registerNewSale(saleDate, productCart, costumer.getCpf(), pagamento);
+                saleService.registerNewSale(saleDate, saleService.returnProductList(productCart, quantity), costumer.getCpf(), pagamento);
                 costumer.addListProductsBought(productCart);
                 encontrado = true;
                 System.out.println("Venda finalizada com sucesso\n");
             }
 
         }
-        System.out.print("1 - Listar vendas\n2 - Realizar outra venda\n3 - Listar vendas por CPF\n4- Sair\nDigite a opção: ");
+        System.out.print("1 - Listar vendas\n2 - Realizar outra venda\n3 - Listar vendas por CPF\n4 - Sair\nDigite a opção: ");
         resposta = sc.nextInt();
         if(resposta == 1){
             System.out.println(saleService.listSales());
+            System.out.println(saleService.toStringProducts());
         }
         if(resposta == 3){
             System.out.print("Digite o cpf do cliente: ");

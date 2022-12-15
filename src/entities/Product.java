@@ -2,6 +2,8 @@ package entities;
 
 import enums.*;
 
+import java.util.Objects;
+
 public class Product {
 
     private String sku;
@@ -119,5 +121,18 @@ public class Product {
                 ", Quantidade : " + quantity +
                 ", Descrição : " + description +
                 ", Preço : " + price + '\n';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return sku.equals(product.sku);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sku);
     }
 }
