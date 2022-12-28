@@ -78,6 +78,6 @@ public class Sale {
         return "Total : R$" + totalValue + '\n' +
                 "Data da venda: " + saleDate + '\n' +
                 "CPF do cliente: " + cpf  + '\n' +
-                "Método de pagamento: " + pagamento + '\n';
+                "Método de pagamento: " + pagamento + '\n' + '\n';
     }
 }

@@ -10,9 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class SaleService {
-
     SaleData saleData = new SaleData();
-    List<Object> sales = saleData.listItems();
     List<Product> productList = new ArrayList<>();
 
     public String registerNewSale(LocalDateTime saleDate, List<Product> products, int cpf, String pagamento){
